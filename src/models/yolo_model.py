@@ -5,11 +5,7 @@ import numpy as np
 import cv2
 from typing import List ,Optional
 logger=logging.getLogger(__name__)
-
-
-CLASS_NAMES: List[str] = [
-        'BIODEGRADABLE', 'CARDBOARD', 'GLASS', 'METAL', 'PAPER', 'PLASTIC'
-    ]
+from helpers.constants import (CLASS_NAMES,WASTE_CATEGORY_MAPPING,RECYCLING_TIPS,WasteCategory)
 
 class GarbageClassifier:
     def __init__(self,model_path:Optional[str] = None):
@@ -89,6 +85,20 @@ class GarbageClassifier:
         if 0<= class_id <len(self.class_names):
             return self.class_names[class_id]
         return f"Unknown_{class_id}"
+    
+    
+    def get_class_info(self):
+        """Get information about all classes"""
+        return [
+            {
+                "class_id":i,
+                "class_name":name,
+                "waste_category":WASTE_CATEGORY_MAPPING.get(name,WasteCategory.RECYCLABLE),
+                "recycling_tip":RECYCLING_TIPS.get(name,"Check local recycling guidelines.")
+                
+            }
+            for i ,name in enumerate(self.class_names)
+        ]
     
     
     

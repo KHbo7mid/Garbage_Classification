@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     IMAGE_SIZE:int
     CONFIDENCE_THRESHOLD:float
     IOU_THRESHOLD:float
+    ALLOWED_IMAGE_TYPES :list[str]
+    
     
     class Config:
         case_sensitive=True

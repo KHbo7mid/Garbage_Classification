@@ -1,3 +1,4 @@
+from pathlib import Path
 from helpers.Settings import get_settings
 import logging
 from ultralytics import YOLO
@@ -8,8 +9,9 @@ logger=logging.getLogger(__name__)
 from helpers.constants import (CLASS_NAMES,WASTE_CATEGORY_MAPPING,RECYCLING_TIPS,WasteCategory)
 
 class GarbageClassifier:
-    def __init__(self,model_path:Optional[str] = None):
-        self.model_path=model_path
+    def __init__(self):
+        current_dir=Path(__file__).resolve().parent
+        self.model_path=current_dir / "best.pt"
         self.model=None
         self.class_names=CLASS_NAMES
         self.load_model()
